@@ -34,15 +34,18 @@ public class Login extends HttpServlet {
             HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        BeansData beansData = (BeansData) session.getAttribute("username");
-        if (beansData == null) {
+        BeansData user = BeansData.getUser(request.getParameter("email"));
+        if (user == null) { 
+            System.out.println("debug beansData == null"); //#
             String email = request.getParameter("email");
-            beansData = new BeansData(email);
-            session.setAttribute("nameBean", beansData);
+            user = new BeansData(email);
+            session.setAttribute("beansData", user);
         } else {
-            beansData.setEmail(request.getParameter("email"));
+            System.out.println("debug else"); //#
+            user.setEmail(request.getParameter("email"));
         }
-        String address = "index.jsp";
+        System.out.println("debug end"); //#
+        String address = "list.jsp";
         RequestDispatcher dispatcher = request.getRequestDispatcher(address);
         dispatcher.forward(request, response);
     }

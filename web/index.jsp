@@ -4,18 +4,18 @@
 <%
 
     if ((request.getParameter("loginform") != null)) {
-        String username = request.getParameter("username");
-        username = username.toLowerCase().trim();
+        String email = request.getParameter("email");
+        email = email.toLowerCase().trim();
         out.println("Checking login<br>");
-        if (username == null) {
+        if (email == null) {
             out.print("Invalid paramters ");
         }
 
         // Here you put the check on the username and password
         //if (username.equals("a")) {
-        out.println("Welcome " + username + " <a href=\"index.jsp\">Back to main</a>"
+        out.println("Welcome " + email + " <a href=\"index.jsp\">Back to main</a>"
                 + "<br/><a href=\"logout.jsp\">Logout</a>");
-        session.setAttribute("username", username);
+        session.setAttribute("email", email);
         //} else {
         //  session.setAttribute("errormsg", "Invalid username");
         ///  response.sendRedirect("index.jsp");
@@ -34,7 +34,7 @@
 
         <BODY>
             <H1>LOGIN</H1>
-                <%                    String myname = (String) session.getAttribute("username");
+                <%                    String myname = (String) session.getAttribute("email");
                     if (myname != null) {
                         out.println("Welcome  " + myname + "  , <a href=\"logout.jsp\" >Logout</a>");
                     } else {

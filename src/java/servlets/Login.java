@@ -34,10 +34,12 @@ public class Login extends HttpServlet {
             HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        System.out.println("debug " + request.getParameter("email"));
         BeansData user = BeansData.getUser(request.getParameter("email"));
-        if (user == null) { 
+        if (user == null) {
             System.out.println("debug beansData == null"); //#
             String email = request.getParameter("email");
+            System.out.println("debug : " + email); //#
             user = new BeansData(email);
             session.setAttribute("beansData", user);
         } else {

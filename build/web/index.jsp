@@ -49,7 +49,7 @@
                 <input type="hidden" name="loginform" value="1"/>
                 <table>
                     <tr>
-                        <td> Username  : </td><td> <input name="username" size=15 type="text" required> </td> 
+                        <td> Email  : </td><td> <input name="email" size=15 type="text" required> </td> 
                     </tr>
                 </table>
                 <input type="submit" value="login" />

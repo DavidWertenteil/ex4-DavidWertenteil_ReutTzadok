@@ -37,15 +37,22 @@ public class Login extends HttpServlet {
         System.out.println("debug " + request.getParameter("email"));
         BeansData user = BeansData.getUser(request.getParameter("email"));
         if (user == null) {
-            System.out.println("debug beansData == null"); //#
             String email = request.getParameter("email");
-            System.out.println("debug : " + email); //#
-            user = new BeansData(email);
-            session.setAttribute("beansData", user);
+            user = new BeansData(email, "some text", true);
         } else {
             System.out.println("debug else"); //#
             user.setEmail(request.getParameter("email"));
         }
+        for (TypeKey name : BeansData.getUsers().keySet()) {
+            String key = name.toString();
+            BeansData val = BeansData.getUser(key);
+            String value = example.get(name).toString();
+            System.out.println(key + " " + value);
+
+        }
+
+        session.setAttribute("beansData", user);
+
         System.out.println("debug end"); //#
         String address = "list.jsp";
         RequestDispatcher dispatcher = request.getRequestDispatcher(address);

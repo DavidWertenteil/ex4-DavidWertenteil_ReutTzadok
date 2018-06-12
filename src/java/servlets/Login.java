@@ -30,30 +30,29 @@ public class Login extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    public void doGet(HttpServletRequest request,
+    public void doPost(HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException {
+        
         HttpSession session = request.getSession();
-        System.out.println("debug " + request.getParameter("email"));
         BeansData user = BeansData.getUser(request.getParameter("email"));
+        
         if (user == null) {
             String email = request.getParameter("email");
             user = new BeansData(email, "some text", true);
         } else {
-            System.out.println("debug else"); //#
             user.setEmail(request.getParameter("email"));
         }
-        for (TypeKey name : BeansData.getUsers().keySet()) {
-            String key = name.toString();
-            BeansData val = BeansData.getUser(key);
-            String value = example.get(name).toString();
-            System.out.println(key + " " + value);
-
-        }
+//        for (TypeKey name : BeansData.getUsers().keySet()) {
+//            String key = name.toString();
+//            BeansData val = BeansData.getUser(key);
+//            String value = example.get(name).toString();
+//            System.out.println(key + " " + value);
+//
+//        }
 
         session.setAttribute("beansData", user);
 
-        System.out.println("debug end"); //#
         String address = "list.jsp";
         RequestDispatcher dispatcher = request.getRequestDispatcher(address);
         dispatcher.forward(request, response);

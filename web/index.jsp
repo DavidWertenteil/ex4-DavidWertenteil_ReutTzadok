@@ -45,7 +45,7 @@
                             session.setAttribute("errormsg", "");
                         }
                 %>
-            <form action="Login" method="get">
+            <form action="Login" method="post">
                 <input type="hidden" name="loginform" value="1"/>
                 <table>
                     <tr>

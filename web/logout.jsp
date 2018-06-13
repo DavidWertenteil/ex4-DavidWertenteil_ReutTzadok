@@ -23,6 +23,4 @@
     } else {
         out.println("You were not logedin <a href=\"index.jsp\">Back</a>");
     }
-
-
 %> 

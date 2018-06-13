@@ -56,12 +56,14 @@ public class Login extends HttpServlet {
                 ArrayList<BeansData> users = (ArrayList<BeansData>) context.getAttribute("users");
                 Boolean newUser = true;
                 for (BeansData temp : users) {
+                    //if user found, update state
                     if (temp.getEmail().compareTo(userEmail) == 0) {
                         temp.setState(true);
                         newUser = false;
                         break;
                     }
                 }
+                //if new user add to the list
                 if (newUser == true) {
                     users.add(new BeansData(userEmail));
                 }

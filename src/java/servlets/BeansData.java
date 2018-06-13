@@ -52,26 +52,4 @@ public class BeansData {
     public String getEmail() {
         return email;
     }
-
-//    private static HashMap users;
-//
-//    static {
-//        users = new HashMap();
-//    }
-    /**
-     * Finds the customer with the given ID. Returns null if there is no match.
-     *
-     * @return info of that user
-     */
-//    public BeansData getUser(String email) {
-//        return ((BeansData) users.get(email));
-//    }
-//
-//    public void addUser(String email) {
-//        users.put(email, new BeansData(email));
-//    }
-//
-//    public void setUser(String email, String status, Boolean state) {
-//        users.put(email, new BeansData(email, status, state));
-//    }
 }

@@ -6,8 +6,8 @@
 
 <%@page import="java.util.ArrayList"
         import="servlets.BeansData"
-        import="javax.servlet.http.HttpSession"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+        import="javax.servlet.http.HttpSession"
+        contentType="text/html" pageEncoding="UTF-8"%>
 <%
     ServletContext context = getServletContext();
     ArrayList<BeansData> users = (ArrayList<BeansData>) context.getAttribute("users");
@@ -19,8 +19,22 @@
         <meta charset="utf-8">
         <title>List</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $(window).beforeunload(function () {
+            <%
+//                for (BeansData temp : users) {
+//                    if (temp.getEmail().compareTo(userEmail) == 0) {
+//                        temp.setState(false);
+//                        break;
+//                    }
+//                }
+            %>
+                });
+            });
+        </script>
     </head>
     <body>
         <br>
@@ -41,21 +55,33 @@
                     <% for (BeansData elem : users) {%>
                     <tr>
                         <th div class="col-md-5"> <%= elem.getEmail()%> </th>
-                        <th div class="col-md-10"> <%= elem.getStatus()%> </th>
+                        <th div class="col-md-10"> <% if (request.getAttribute("edit") == null
+                                    || !(Boolean) request.getAttribute("edit")) {
+                                out.println(elem.getStatus());
+                            } else { %>
+                            <div class="container">
+                                <form class="form-horizontal" action="Save" method="post" name="form">
+                                    <div class="form-group">
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" id="edit" placeholder="Enter your status:" autofocus="autofocus" name="edit" required>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div> 
+                            <%}%> </th>
                         <th div class="col-md-2"> <%if (elem.getState()) {
                                 out.println("Connencted");
                             } else {
                                 out.println("Disconnencted");
                             }%> </th>
-                        <th div class="col-md-2">
+                        <th div class="col-md-2" id="edit" >
                             <%  if (elem.getEmail().compareTo(userEmail) == 0) {%>
-                            <a href="list.jsp">
-                                <button type="button" class="btn btn-default">Edit</button>
+                            <a action="Edit" method="post">
+                                <button type="button" class="btn btn-default" >Edit</button>
                             </a>
                             <%   } %>
                         </th>
                     </tr>
-
                     <%}%> <!-- end for -->
                 </tbody>
             </table>
@@ -66,4 +92,5 @@
             </a>
         </div>
     </body>
+
 </html>

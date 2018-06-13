@@ -14,8 +14,9 @@
     <body>
         <h1>List</h1>
 
+        
         <jsp:useBean id="beansData" type="servlets.BeansData" scope="session" />
         <p> Hi <jsp:getProperty name="beansData" property="email" /> </p>
-        <%--<jsp:getProperty name="user" property="email" />--%>
+
     </body>
 </html>

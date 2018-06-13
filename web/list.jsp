@@ -4,27 +4,66 @@
     Author     : davidwer, reutbar
 --%>
 
-<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.ArrayList"
+        import="servlets.BeansData"
+        import="javax.servlet.http.HttpSession"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="servlets.BeansData"%>
 <%
     ServletContext context = getServletContext();
     ArrayList<BeansData> users = (ArrayList<BeansData>) context.getAttribute("users");
-
+    String userEmail = (String) session.getAttribute("userEmail");
 %>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
         <title>List</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <h1>List</h1>
+        <br>
+        <br>
+        <div class="container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th div class="col-md-5">Email</th>
+                        <th div class="col-md-10">Status</th>
+                        <th div class="col-md-2">State</th>
+                        <th div class="col-md-2">Edit</th>
+                    </tr>
+                </thead>
 
-        <% for (BeansData elem : users) {%>
-        <%= elem.getEmail()%> <br>
-        <%= elem.getStatus()%><br>
-        <%= elem.getState()%><br>
-        <% }%>
+                <tbody>
+
+                    <% for (BeansData elem : users) {%>
+                    <tr>
+                        <th div class="col-md-5"> <%= elem.getEmail()%> </th>
+                        <th div class="col-md-10"> <%= elem.getStatus()%> </th>
+                        <th div class="col-md-2"> <%if (elem.getState()) {
+                                out.println("Connencted");
+                            } else {
+                                out.println("Disconnencted");
+                            }%> </th>
+                        <th div class="col-md-2">
+                            <%  if (elem.getEmail().compareTo(userEmail) == 0) {%>
+                            <a href="list.jsp">
+                                <button type="button" class="btn btn-default">Edit</button>
+                            </a>
+                            <%   } %>
+                        </th>
+                    </tr>
+
+                    <%}%> <!-- end for -->
+                </tbody>
+            </table>
+        </div>
+        <div class="container">
+            <a href="logout.jsp" >  
+                <button type="button" class="btn btn-primary">Logout</button>
+            </a>
+        </div>
     </body>
 </html>

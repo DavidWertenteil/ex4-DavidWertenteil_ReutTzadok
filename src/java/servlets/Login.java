@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package servlets;
 
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import static jdk.nashorn.internal.objects.NativeRegExpExecResult.length;
 
 /**
  *
@@ -62,12 +56,13 @@ public class Login extends HttpServlet {
                 ArrayList<BeansData> users = (ArrayList<BeansData>) context.getAttribute("users");
                 Boolean newUser = true;
                 for (BeansData temp : users) {
-                    if (temp.getEmail() == userEmail) {
+                    if (temp.getEmail().compareTo(userEmail) == 0) {
                         temp.setState(true);
                         newUser = false;
+                        break;
                     }
                 }
-                if (newUser) {
+                if (newUser == true) {
                     users.add(new BeansData(userEmail));
                 }
                 context.setAttribute("users", users);
@@ -78,6 +73,13 @@ public class Login extends HttpServlet {
         String address = "list.jsp";
         RequestDispatcher dispatcher = request.getRequestDispatcher(address);
         dispatcher.forward(request, response);
+    }
+
+    @Override
+    public void doGet(HttpServletRequest request,
+            HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
 }

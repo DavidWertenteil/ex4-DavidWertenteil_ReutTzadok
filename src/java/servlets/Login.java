@@ -30,7 +30,7 @@ public class Login extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    public void doGet(HttpServletRequest request,
+    public void doPost(HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -41,12 +41,12 @@ public class Login extends HttpServlet {
             String email = request.getParameter("email");
             System.out.println("debug : " + email); //#
             user = new BeansData(email);
-            session.setAttribute("beansData", user);
+//            session.setAttribute("beansData", user);
         } else {
             System.out.println("debug else"); //#
             user.setEmail(request.getParameter("email"));
         }
-        System.out.println("debug end"); //#
+        // Save all informatio in json
         String address = "list.jsp";
         RequestDispatcher dispatcher = request.getRequestDispatcher(address);
         dispatcher.forward(request, response);

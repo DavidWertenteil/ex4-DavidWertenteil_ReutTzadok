@@ -1,3 +1,8 @@
+<%-- 
+    Document   : list
+    Created on : Jun 11, 2018, 12:35:36 PM
+    Author     : davidwer, reutbar
+--%>
 <%
 
     String username = (String) session.getAttribute("email");

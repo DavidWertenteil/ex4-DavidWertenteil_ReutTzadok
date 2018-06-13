@@ -6,15 +6,28 @@
 package servlets;
 
 import java.util.*;
+
 /**
  *
- * @author davidwer
+ * @author davidwer, reutbar
  */
 public class BeansData {
 
     private String email;
     private String status;
     private Boolean state;
+
+    public BeansData(String email) {
+        this.email = email;
+        this.status = "No status provided!";
+        this.state = true;
+    }
+
+    public BeansData(String email, String status, Boolean state) {
+        this.email = email;
+        this.status = status;
+        this.state = state;
+    }
 
     public void setStatus(String status) {
         this.status = status;
@@ -32,18 +45,6 @@ public class BeansData {
         return state;
     }
 
-    public BeansData(String email) {
-        this.email = email;
-        this.status = "";
-        this.state = true;
-    }
-
-    public BeansData(String email, String status, Boolean state) {
-        this.email = email;
-        this.status = status;
-        this.state = state;
-    }
-
     public void setEmail(String email) {
         this.email = email;
     }
@@ -52,27 +53,25 @@ public class BeansData {
         return email;
     }
 
-    private static HashMap users;
-
-    static {
-        users = new HashMap();
-    }
-
+//    private static HashMap users;
+//
+//    static {
+//        users = new HashMap();
+//    }
     /**
      * Finds the customer with the given ID. Returns null if there is no match.
      *
      * @return info of that user
      */
-    public static BeansData getUser(String email) {
-        return ((BeansData) users.get(email));
-    }
-
-    public static void addUser(String email) {
-        users.put(email, new BeansData(email));
-    }
-
-    public static void setUser(String email, String status, Boolean state) {
-        users.put(email, new BeansData(email, status, state));
-    }
+//    public BeansData getUser(String email) {
+//        return ((BeansData) users.get(email));
+//    }
+//
+//    public void addUser(String email) {
+//        users.put(email, new BeansData(email));
+//    }
+//
+//    public void setUser(String email, String status, Boolean state) {
+//        users.put(email, new BeansData(email, status, state));
+//    }
 }
-

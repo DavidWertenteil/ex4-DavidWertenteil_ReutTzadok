@@ -1,10 +1,17 @@
 <%-- 
     Document   : list
     Created on : Jun 11, 2018, 12:35:36 PM
-    Author     : davidwer
+    Author     : davidwer, reutbar
 --%>
 
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="servlets.BeansData"%>
+<%
+    ServletContext context = getServletContext();
+    ArrayList<BeansData> users = (ArrayList<BeansData>) context.getAttribute("users");
+
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,9 +21,10 @@
     <body>
         <h1>List</h1>
 
-        
-        <jsp:useBean id="beansData" type="servlets.BeansData" scope="session" />
-        <p> Hi <jsp:getProperty name="beansData" property="email" /> </p>
-
+        <% for (BeansData elem : users) {%>
+        <%= elem.getEmail()%> <br>
+        <%= elem.getStatus()%><br>
+        <%= elem.getState()%><br>
+        <% }%>
     </body>
 </html>

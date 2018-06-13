@@ -1,19 +1,23 @@
-<!--Reut Tzadok, David Wertenteil-->
+<%-- 
+    Document   : list
+    Created on : Jun 11, 2018, 12:35:36 PM
+    Author     : davidwer, reutbar
+--%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
 
     if ((request.getParameter("loginform") != null)) {
-        String email = request.getParameter("email");
+
+        String email = (String) session.getAttribute("email");
         email = email.toLowerCase().trim();
         out.println("Checking login<br>");
         if (email == null) {
             out.print("Invalid paramters!");
+        }else{
+            request.getRequestDispatcher("list.jsp").forward(request, response);
         }
-
     } else {
-
-
 %>
 <!DOCTYPE html>
 <HTML>

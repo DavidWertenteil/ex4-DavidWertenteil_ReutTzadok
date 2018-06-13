@@ -7,16 +7,19 @@ package servlets;
 
 import javax.servlet.annotation.WebServlet;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import static jdk.nashorn.internal.objects.NativeRegExpExecResult.length;
 
 /**
  *
- * @author davidwer
+ * @author davidwer, reutbar
  */
 @WebServlet(name = "Login", urlPatterns = {"/Login"})
 public class Login extends HttpServlet {
@@ -30,29 +33,48 @@ public class Login extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @Override
     public void doPost(HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException {
 
-        HttpSession session = request.getSession();
-        BeansData user = BeansData.getUser(request.getParameter("email"));
-
-        if (user == null) {
-            String email = request.getParameter("email");
-            user = new BeansData(email, "some text", true);
-        } else {
-            user.setEmail(request.getParameter("email"));
+        // Validate the email
+        String userEmail = request.getParameter("email");
+        if (userEmail == null) {
+            request.getRequestDispatcher("logout.jsp").forward(request, response);
         }
-//        for (TypeKey name : BeansData.getUsers().keySet()) {
-//            String key = name.toString();
-//            BeansData val = BeansData.getUser(key);
-//            String value = example.get(name).toString();
-//            System.out.println(key + " " + value);
-//
-//        }
 
-        session.setAttribute("beansData", user);
+        // Set current user in session
+        HttpSession session = request.getSession();
+        userEmail = userEmail.toLowerCase().trim();
+        session.setAttribute("userEmail", userEmail);
 
+        // Set servletContext
+        ServletContext context = getServletContext();
+        synchronized (this) {
+            if (context.getAttribute("users") == null) {
+                //First user, create the list
+                ArrayList<BeansData> users = new ArrayList<BeansData>();
+                users.add(new BeansData(userEmail));
+                context.setAttribute("users", users);
+            } else {
+                //Check if new user
+                ArrayList<BeansData> users = (ArrayList<BeansData>) context.getAttribute("users");
+                Boolean newUser = true;
+                for (BeansData temp : users) {
+                    if (temp.getEmail() == userEmail) {
+                        temp.setState(true);
+                        newUser = false;
+                    }
+                }
+                if (newUser) {
+                    users.add(new BeansData(userEmail));
+                }
+                context.setAttribute("users", users);
+            }
+        }
+
+        // forward to list.jsp page
         String address = "list.jsp";
         RequestDispatcher dispatcher = request.getRequestDispatcher(address);
         dispatcher.forward(request, response);

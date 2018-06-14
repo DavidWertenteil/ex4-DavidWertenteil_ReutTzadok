@@ -63,7 +63,7 @@
                                 <form class="form-horizontal" action="Save" method="get">
                                     <div class="form-group">
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" id="status" placeholder="<%=elem.getStatus()%>" autofocus="autofocus" name="status" required>
+                                            <input type="text" class="form-control" id="status" placeholder="<%=elem.getStatus()%>" autofocus="autofocus" name="status" required><br>
                                             <button type="submit" id="status" class="btn btn-success">Save</button>
                                         </div>
                                     </div>

@@ -87,7 +87,7 @@
             </table>
         </div>
         <div class="container">
-            <a href="logout.jsp" >  
+            <a href="Logout" >  
                 <button type="button" class="btn btn-primary">Logout</button>
             </a>
         </div>

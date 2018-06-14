@@ -11,8 +11,7 @@
     ServletContext context = getServletContext();
     ArrayList<BeansData> users = (ArrayList<BeansData>) context.getAttribute("users");
     String userEmail = (String) session.getAttribute("userEmail");
-%>
-<%
+
     if (userEmail != null && users != null) {
         for (BeansData elem : users) {
             if (userEmail == elem.getEmail()) {

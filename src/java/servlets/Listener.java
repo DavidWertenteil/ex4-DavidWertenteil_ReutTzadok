@@ -15,7 +15,7 @@ import javax.servlet.annotation.WebListener;
 // * @author davidwer
 // */
 //@WebListener
-//public class Listener implements SessionRequestListener {
+//public class Listener implements ServletRequestEvent {
 //
 //    @Override
 //    public void requestDestroyed(ServletRequestEvent servletRequestEvent) {

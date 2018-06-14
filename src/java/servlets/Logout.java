@@ -38,15 +38,6 @@ public class Logout extends HttpServlet {
 
         HttpSession session = request.getSession();
         if (session.getAttribute("userEmail") != null) {
-            ServletContext context = getServletContext();
-            ArrayList<BeansData> users = (ArrayList<BeansData>) context.getAttribute("users");
-            String user = (String) session.getAttribute("userEmail");
-            for (BeansData temp : users) {
-                if (temp.getEmail().compareTo(user) == 0) {
-                    temp.setState(false);
-                    break;
-                }
-            }
             session.invalidate();
         }
         request.getRequestDispatcher("index.jsp").forward(request, response);
@@ -80,15 +71,4 @@ public class Logout extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

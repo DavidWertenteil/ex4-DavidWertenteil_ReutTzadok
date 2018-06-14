@@ -33,11 +33,9 @@ public class Edit extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        Boolean edit = true;
-        request.setAttribute("edit", edit);
-        request.getRequestDispatcher("list.jsp").forward(request, response);
+        doGet(request, response);
     }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Boolean edit = true;

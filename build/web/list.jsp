@@ -55,15 +55,16 @@
                     <% for (BeansData elem : users) {%>
                     <tr>
                         <th div class="col-md-5"> <%= elem.getEmail()%> </th>
-                        <th div class="col-md-10"> <% if (request.getAttribute("edit") == null
-                                    || !(Boolean) request.getAttribute("edit")) {
+                        <th div class="col-md-10"> <%
+                            if (elem.getEmail().compareTo(userEmail) != 0 || request.getAttribute("edit") == null) {
                                 out.println(elem.getStatus());
-                            } else { %>
+                            } else {%>
                             <div class="container">
-                                <form class="form-horizontal" action="Save" method="post" name="form">
+                                <form class="form-horizontal" action="Save" method="get">
                                     <div class="form-group">
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" id="edit" placeholder="Enter your status:" autofocus="autofocus" name="edit" required>
+                                            <input type="text" class="form-control" id="status" placeholder="<%=elem.getStatus()%>" autofocus="autofocus" name="status" required>
+                                            <button type="submit" id="status" class="btn btn-success">Save</button>
                                         </div>
                                     </div>
                                 </form>
@@ -75,11 +76,16 @@
                                 out.println("Disconnencted");
                             }%> </th>
                         <th div class="col-md-2" id="edit" >
-                            <%  if (elem.getEmail().compareTo(userEmail) == 0) {%>
-                            <a action="Edit" method="post">
-                                <button type="button" class="btn btn-default" >Edit</button>
-                            </a>
-                            <%   } %>
+                            <%  if (elem.getEmail().compareTo(userEmail) == 0) {
+                                    if (request.getAttribute("edit") == null) {
+                            %>
+                            <a href="Edit" method="post" name="edit">  
+                                <button type="button" class="btn btn-default">Edit</button>
+                            </a>   
+                            <% } else {
+                                request.removeAttribute("edit");%>  
+                            <%}
+                                }%>
                         </th>
                     </tr>
                     <%}%> <!-- end for -->

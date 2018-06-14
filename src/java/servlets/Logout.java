@@ -48,11 +48,8 @@ public class Logout extends HttpServlet {
                 }
             }
             session.invalidate();
-            request.getRequestDispatcher("index.jsp").forward(request, response);
-
-        } else {
-            out.println("You were not logedin <a href=\"index.jsp\">Back</a>");
         }
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

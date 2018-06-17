@@ -39,7 +39,8 @@ public class Edit extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Boolean edit = true;
-        request.setAttribute("edit", edit);
+        HttpSession session = request.getSession();
+        session.setAttribute("edit", edit);
         request.getRequestDispatcher("list.jsp").forward(request, response);
     }
 }

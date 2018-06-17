@@ -54,8 +54,9 @@
                 getUpdate();
                 polling();
                 function polling() {
-                        setInterval(getUpdate, 15000);
-                    
+                    if (<%= session.getAttribute("edit") == null%>) {
+                        setInterval(getUpdate, 5000);
+                    }
                 }
                 function getUpdate() {
                     $.post("Update", function (dataInJson) {
@@ -68,7 +69,8 @@
                             str += elem.email;
                             str += " </div> </th>";
                             str += " <th div class=col-md-10> ";
-                            if (elem.email === '<%= userEmail%>' || '<%= request.getAttribute("edit") == null%>') { //
+                            console.log(elem.email !== '<%= userEmail%>');
+                            if (elem.email !== '<%= userEmail%>' || <%= session.getAttribute("edit") == null%>) { //
                                 str += elem.status;
                             } else {
                                 str += " <div class=container>";
@@ -94,20 +96,18 @@
                             str += "</th>";
                             str += "<th div class=col-md-2 id=edit>";
                             if (elem.email === '<%= userEmail%>') {
-                                console.log("In the if");
-                                if ('<%= request.getAttribute("edit") == null%>') {
+                                if (<%= session.getAttribute("edit") == null%>) {
                                     console.log("cant get her");
                                     str += " <a href=Edit method=post name=edit>  ";
                                     str += " <button type=button class=\"btn btn-default\">Edit</button>";
                                     str += " </a>";
                                 } else {
-            <% request.getAttribute("edit");%>
+            <% session.removeAttribute("edit");%>
                                 }
                             }
                             str += "</th>";
                             str += "</tr>";
                         });
-
                         $("#list").html(str);
                     });
 

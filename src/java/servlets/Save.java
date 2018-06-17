@@ -6,7 +6,6 @@
 package servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -15,7 +14,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -50,15 +48,15 @@ public class Save extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-         // Validate the status
-        String userStatus =(String) request.getParameter("status");
+
+        // Validate the status
+        String userStatus = (String) request.getParameter("status");
         if (userStatus == null || request.getSession().getAttribute("userEmail") == null) {
             request.getRequestDispatcher("list.jsp").forward(request, response);
         }
-        
+
         String userEmail = (String) request.getSession().getAttribute("userEmail");
-        
+
         // Clean status
         userStatus = userStatus.trim();
 
@@ -77,7 +75,7 @@ public class Save extends HttpServlet {
                         break;
                     }
                 }
-               
+
                 context.setAttribute("users", users);
             }
         }

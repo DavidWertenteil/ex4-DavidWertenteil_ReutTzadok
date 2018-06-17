@@ -5,24 +5,32 @@
         <servlet-class>servlets.Login</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>List</servlet-name>
-        <servlet-class>servlets.List</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>Listener</servlet-name>
         <servlet-class>servlets.Listener</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Edit</servlet-name>
+        <servlet-class>servlets.Edit</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Save</servlet-name>
+        <servlet-class>servlets.Save</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Update</servlet-name>
+        <servlet-class>servlets.Update</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>List</servlet-name>
-        <url-pattern>/List</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>Listener</servlet-name>
         <url-pattern>/Listener</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Update</servlet-name>
+        <url-pattern>/Update</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

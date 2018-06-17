@@ -40,45 +40,6 @@
                 </thead>
                 <div>
                     <tbody id="list">
-
-                        <% for (BeansData elem : users) {%>
-                        <tr>
-                            <th div class="col-md-5"> <%= elem.getEmail()%> </th>
-                            <th div class="col-md-10"> <%
-                                if (elem.getEmail().compareTo(userEmail) != 0 || request.getAttribute("edit") == null) {
-                                    out.println(elem.getStatus());
-                                } else {%>
-                                <div class="container">
-                                    <form class="form-horizontal" action="Save" method="get">
-                                        <div class="form-group">
-                                            <div class="col-md-10">
-                                                <input type="text" class="form-control" id="status" placeholder="<%=elem.getStatus()%>" autofocus="autofocus" name="status" required><br>
-                                                <button type="submit" id="status" class="btn btn-success">Save</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div> 
-                                <%}%> </th>
-                            <th div class="col-md-2"> <%if (elem.getState()) {
-                                    out.println("Connencted");
-                                } else {
-                                    out.println("Disconnencted");
-                                }%> </th>
-                            <th div class="col-md-2" id="edit" >
-                                <%  if (elem.getEmail().compareTo(userEmail) == 0) {
-                                        if (request.getAttribute("edit") == null) {
-                                %>
-                                <a href="Edit" method="post" name="edit">  
-                                    <button type="button" class="btn btn-default">Edit</button>
-                                </a>   
-                                <% } else {
-                                    request.removeAttribute("edit");%>  
-                                <%}
-                                    }%>
-                            </th>
-                        </tr>
-                        <%}%> <!-- end for -->
-
                     </tbody>
                 </div>
             </table>
@@ -90,11 +51,12 @@
         </div>
         <script>
             $(document).ready(function () {
-                var myVar;
-                function myFunction() {
-                    myVar = setInterval(getUpdate, 1000);
+                getUpdate();
+                polling();
+                function polling() {
+                        setInterval(getUpdate, 15000);
+                    
                 }
-                myFunction();
                 function getUpdate() {
                     $.post("Update", function (dataInJson) {
                         $("#list").empty();
@@ -106,7 +68,7 @@
                             str += elem.email;
                             str += " </div> </th>";
                             str += " <th div class=col-md-10> ";
-                            if (elem.email === '<%= userEmail%>' || '<%= request.getAttribute("edit")%>' === null) { //
+                            if (elem.email === '<%= userEmail%>' || '<%= request.getAttribute("edit") == null%>') { //
                                 str += elem.status;
                             } else {
                                 str += " <div class=container>";
@@ -116,7 +78,7 @@
                                 str += " <input type=text class=form-control id=status placeholder=";
                                 str += elem.status;
                                 str += " autofocus=autofocus name=status required><br>";
-                                str += " <button type=submit id=status class=btn btn-success>Save</button>";
+                                str += " <button type=submit id=status class=\"btn btn-success\">Save</button>";
                                 str += " </div>";
                                 str += " </div>";
                                 str += " </form>";
@@ -133,10 +95,10 @@
                             str += "<th div class=col-md-2 id=edit>";
                             if (elem.email === '<%= userEmail%>') {
                                 console.log("In the if");
-                                if ('<%= request.getAttribute("edit")%>' === null) {
+                                if ('<%= request.getAttribute("edit") == null%>') {
                                     console.log("cant get her");
-                                    str += " <a href=Update method=post name=edit>  ";
-                                    str += " <button type=button class=btn btn-default>Edit</button>";
+                                    str += " <a href=Edit method=post name=edit>  ";
+                                    str += " <button type=button class=\"btn btn-default\">Edit</button>";
                                     str += " </a>";
                                 } else {
             <% request.getAttribute("edit");%>

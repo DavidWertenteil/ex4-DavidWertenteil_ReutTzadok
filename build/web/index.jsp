@@ -6,7 +6,9 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"
         import="java.util.ArrayList"
-        import="servlets.BeansData"%>
+        import="servlets.BeansData"
+        import="java.util.Date"
+        import="java.sql.Timestamp"%>
 <%
     ServletContext context = getServletContext();
     ArrayList<BeansData> users = (ArrayList<BeansData>) context.getAttribute("users");
@@ -15,7 +17,10 @@
     if (userEmail != null && users != null) {
         for (BeansData elem : users) {
             if (userEmail == elem.getEmail()) {
-                elem.setState(true);
+                synchronized (this) {
+                    elem.setState(true);
+                    context.setAttribute("timestamp", new Timestamp(new Date().getTime()));
+                }
                 break;
             }
         }

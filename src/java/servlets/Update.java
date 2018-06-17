@@ -7,10 +7,9 @@ package servlets;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -37,18 +36,15 @@ public class Update extends HttpServlet {
 
         response.setContentType("application/JSON;charset=UTF-8");
         ServletContext context = getServletContext();
-        //   SimpleDateFormat serverTimestamp = (SimpleDateFormat) context.getAttribute("timestamp");
-        //   SimpleDateFormat clientTimestamp = (SimpleDateFormat) request.getAttribute("time");
+        Timestamp serverTimestamp = (Timestamp) context.getAttribute("timestamp");
+        Timestamp clientTimestamp = (Timestamp) request.getAttribute("clientTimestamp");
 
-        JsonArray updateUsers = new JsonArray();
-
-        ArrayList<BeansData> users = (ArrayList<BeansData>) context.getAttribute("users");
-
-        
-        String gson = new Gson().toJson(users);
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(gson);
-
+        if (clientTimestamp == null || serverTimestamp == null || serverTimestamp.after(clientTimestamp)) {
+            JsonArray updateUsers = new JsonArray();
+            ArrayList<BeansData> users = (ArrayList<BeansData>) context.getAttribute("users");
+            String gson = new Gson().toJson(users);
+            response.getWriter().write(gson);
+        }
     }
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 

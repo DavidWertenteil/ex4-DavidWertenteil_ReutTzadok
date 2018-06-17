@@ -7,6 +7,9 @@
 <%@page import="java.util.ArrayList"
         import="servlets.BeansData"
         import="javax.servlet.http.HttpSession"
+        import="java.text.SimpleDateFormat"
+        import="java.util.Date"
+        import="java.sql.Timestamp"
         contentType="text/html" pageEncoding="UTF-8"%>
 <%
     ServletContext context = getServletContext();
@@ -60,55 +63,58 @@
                 }
                 function getUpdate() {
                     $.post("Update", function (dataInJson) {
-                        $("#list").empty();
-                        str = "";
-
-                        $.each(JSON.parse(dataInJson), function (index, elem) {
-                            str += "<tr>";
-                            str += "<th div class=col-md-5>";
-                            str += elem.email;
-                            str += " </div> </th>";
-                            str += " <th div class=col-md-10> ";
-                            console.log(elem.email !== '<%= userEmail%>');
-                            if (elem.email !== '<%= userEmail%>' || <%= session.getAttribute("edit") == null%>) { //
-                                str += elem.status;
-                            } else {
-                                str += " <div class=container>";
-                                str += " <form class=form-horizontal action=Save method=post>";
-                                str += " <div class=form-group>";
-                                str += " <div class=col-md-10>";
-                                str += " <input type=text class=form-control id=status placeholder=";
-                                str += elem.status;
-                                str += " autofocus=autofocus name=status required><br>";
-                                str += " <button type=submit id=status class=\"btn btn-success\">Save</button>";
-                                str += " </div>";
-                                str += " </div>";
-                                str += " </form>";
-                                str += " </div> ";
-                            }
-                            str += "</th>";
-                            str += "<th div class=col-md-2>";
-                            if (elem.state) {
-                                str += "Connencted";
-                            } else {
-                                str += "Disconnencted";
-                            }
-                            str += "</th>";
-                            str += "<th div class=col-md-2 id=edit>";
-                            if (elem.email === '<%= userEmail%>') {
-                                if (<%= session.getAttribute("edit") == null%>) {
-                                    console.log("cant get her");
-                                    str += " <a href=Edit method=post name=edit>  ";
-                                    str += " <button type=button class=\"btn btn-default\">Edit</button>";
-                                    str += " </a>";
+            <% request.setAttribute("clientTimestamp", new Timestamp(new Date().getTime()));%>
+                    console.log(dataInJson);
+                        if (dataInJson !== null) {
+                            console.log("New update!");
+                            $("#list").empty();
+                            str = "";
+                            $.each(JSON.parse(dataInJson), function (index, elem) {
+                                str += "<tr>";
+                                str += "<th div class=col-md-5>";
+                                str += elem.email;
+                                str += " </div> </th>";
+                                str += " <th div class=col-md-10> ";
+                                console.log(elem.email !== '<%= userEmail%>');
+                                if (elem.email !== '<%= userEmail%>' || <%= session.getAttribute("edit") == null%>) { //
+                                    str += elem.status;
                                 } else {
-            <% session.removeAttribute("edit");%>
+                                    str += " <div class=container>";
+                                    str += " <form class=form-horizontal action=Save method=post>";
+                                    str += " <div class=form-group>";
+                                    str += " <div class=col-md-10>";
+                                    str += " <input type=text class=form-control id=status placeholder=";
+                                    str += elem.status;
+                                    str += " autofocus=autofocus name=status required><br>";
+                                    str += " <button type=submit id=status class=\"btn btn-success\">Save</button>";
+                                    str += " </div>";
+                                    str += " </div>";
+                                    str += " </form>";
+                                    str += " </div> ";
                                 }
-                            }
-                            str += "</th>";
-                            str += "</tr>";
-                        });
-                        $("#list").html(str);
+                                str += "</th>";
+                                str += "<th div class=col-md-2>";
+                                if (elem.state) {
+                                    str += "Connencted";
+                                } else {
+                                    str += "Disconnencted";
+                                }
+                                str += "</th>";
+                                str += "<th div class=col-md-2 id=edit>";
+                                if (elem.email === '<%= userEmail%>') {
+                                    if (<%= session.getAttribute("edit") == null%>) {
+                                        str += " <a href=Edit method=post name=edit>  ";
+                                        str += " <button type=button class=\"btn btn-default\">Edit</button>";
+                                        str += " </a>";
+                                    } else {
+            <% session.removeAttribute("edit");%>
+                                    }
+                                }
+                                str += "</th>";
+                                str += "</tr>";
+                            });
+                            $("#list").html(str);
+                        }
                     });
 
                 }

@@ -2,9 +2,9 @@ package servlets;
 
 import javax.servlet.annotation.WebServlet;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.sql.Timestamp;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -70,15 +70,8 @@ public class Login extends HttpServlet {
                     users.add(new BeansData(userEmail));
                 }
                 context.setAttribute("users", users);
+                context.setAttribute("timestamp", new Timestamp(new Date().getTime()));
             }
-        }
-        
-        // Set new timestamp
-        Date date = new Date();
-        SimpleDateFormat timestamp = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
-        timestamp.format(date);
-        synchronized (this) {
-            context.setAttribute("timestamp", timestamp);
         }
 
         // forward to list.jsp page

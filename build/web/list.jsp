@@ -25,7 +25,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     </head>
-    <body onload="htmlPage()">
+    <body>
         <br>
         <br>
         <div class="container">
@@ -96,60 +96,56 @@
                 }
                 myFunction();
                 function getUpdate() {
-
-
                     $.post("Update", function (dataInJson) {
-//                        alert("Hello! I am an alert box!!");
                         $("#list").empty();
-                        str = "<tbody id=list>";
-                        console.log('success', dataInJson);
-//                        $.each(dataInJson, function (index, elem) {
-                        str += " <tr>";
-                        str += "<th div class=col-md-5>";
-//                            str += elem.email;
-                        str += "elem.email";
+                        str = "";
 
-                        str += "   </div> </th>";
-                        str += " <th div class=col-md-10> ";
-//                            if (elem.email.compareTo(userEmail) !== 0 || request.getAttribute("edit") === null) {
-//                        str += elem.status;
-//                            } else {
-                        str += " <div class=container>";
-                        str += " <form class=form - horizontal action=Save method=post>";
-                        str += " <div class=form - group>";
-                        str += " <div class=col - md - 10>";
-                        str += " <input type=text class=form-control id=status placeholder=";
-//                        str += elem.status;
-                        str += " autofocus=autofocus name=status required><br>";
-                        str += "  <button type=submit id=status class=btn btn-success>Save</button>";
-                        str += "    </div>";
-                        str += "    </div>";
-                        str += "    </form>";
-                        str += "    </div> ";
-//                            }
-                        str += "</th>";
-                        str += "<th div class=col-md-2>";
-//                            if (elem.state) {
-                        str += "Connencted";
-//                            } else {
-//                                str += "Disconnencted";
-//                            }
-                        str += "</th>";
-                        str += "<th div class=col-md-2 id=edit>";
-//                            if (elem.email.compareTo(userEmail) === 0) {
-//                                if (request.getAttribute("edit") === null) {
-//
-//                                    str += "  <a href=Update method=post name=edit>  ";
-//                                    str += "   <button type=button class=btn btn-default>Edit</button>";
-//                                    str += "      </a>   ";
-//                                } else {
-//                                    request.removeAttribute("edit");
-//                                }
-//                            }
-                        str += "</th>";
-                        str += "</tr>";
-//                        });
-                        str += " </tbody>";
+                        $.each(JSON.parse(dataInJson), function (index, elem) {
+                            str += "<tr>";
+                            str += "<th div class=col-md-5>";
+                            str += elem.email;
+                            str += " </div> </th>";
+                            str += " <th div class=col-md-10> ";
+                            if (elem.email === '<%= userEmail%>' || '<%= request.getAttribute("edit")%>' === null) { //
+                                str += elem.status;
+                            } else {
+                                str += " <div class=container>";
+                                str += " <form class=form-horizontal action=Save method=post>";
+                                str += " <div class=form-group>";
+                                str += " <div class=col-md-10>";
+                                str += " <input type=text class=form-control id=status placeholder=";
+                                str += elem.status;
+                                str += " autofocus=autofocus name=status required><br>";
+                                str += " <button type=submit id=status class=btn btn-success>Save</button>";
+                                str += " </div>";
+                                str += " </div>";
+                                str += " </form>";
+                                str += " </div> ";
+                            }
+                            str += "</th>";
+                            str += "<th div class=col-md-2>";
+                            if (elem.state) {
+                                str += "Connencted";
+                            } else {
+                                str += "Disconnencted";
+                            }
+                            str += "</th>";
+                            str += "<th div class=col-md-2 id=edit>";
+                            if (elem.email === '<%= userEmail%>') {
+                                console.log("In the if");
+                                if ('<%= request.getAttribute("edit")%>' === null) {
+                                    console.log("cant get her");
+                                    str += " <a href=Update method=post name=edit>  ";
+                                    str += " <button type=button class=btn btn-default>Edit</button>";
+                                    str += " </a>";
+                                } else {
+            <% request.getAttribute("edit");%>
+                                }
+                            }
+                            str += "</th>";
+                            str += "</tr>";
+                        });
+
                         $("#list").html(str);
                     });
 

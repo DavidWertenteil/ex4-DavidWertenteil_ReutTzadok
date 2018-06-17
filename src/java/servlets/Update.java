@@ -43,16 +43,9 @@ public class Update extends HttpServlet {
         JsonArray updateUsers = new JsonArray();
 
         ArrayList<BeansData> users = (ArrayList<BeansData>) context.getAttribute("users");
-        for (BeansData temp : users) {
-            JsonObject user = new JsonObject();
-            user.addProperty("email", temp.getEmail());
-            user.addProperty("status", temp.getStatus());
-            user.addProperty("state", temp.getState());
-            updateUsers.add(user);
-        }
+
         
-        String gson = new Gson().toJson(updateUsers);
-//        System.out.println(gson);
+        String gson = new Gson().toJson(users);
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(gson);
 

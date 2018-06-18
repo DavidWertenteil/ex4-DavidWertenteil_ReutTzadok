@@ -5,17 +5,18 @@
  */
 package servlets;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
-import javax.websocket.Session;
 
 ///**
 // *
-// * @author davidwer
+// * @author davidwer, reutbar
 // */
 @WebListener
 public class Listener implements HttpSessionListener {
@@ -32,6 +33,7 @@ public class Listener implements HttpSessionListener {
                 for (BeansData temp : users) {
                     if (temp.getEmail().compareTo(user) == 0) {
                         temp.setState(false);
+                        context.setAttribute("timestamp", new Timestamp(new Date().getTime()));
                         break;
                     }
                 }

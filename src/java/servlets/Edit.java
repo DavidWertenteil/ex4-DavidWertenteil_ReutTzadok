@@ -6,8 +6,8 @@
 package servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
+import java.sql.Timestamp;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -41,6 +41,10 @@ public class Edit extends HttpServlet {
         Boolean edit = true;
         HttpSession session = request.getSession();
         session.setAttribute("edit", edit);
+        synchronized (this) {
+            getServletContext().setAttribute("timestamp", new Timestamp(new Date().getTime()));
+        }
+
         request.getRequestDispatcher("list.jsp").forward(request, response);
     }
 }

@@ -6,10 +6,6 @@
 package servlets;
 
 import java.io.IOException;
-import static java.lang.System.out;
-import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

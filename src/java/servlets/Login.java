@@ -21,8 +21,6 @@ import javax.servlet.http.HttpSession;
 public class Login extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -69,9 +67,12 @@ public class Login extends HttpServlet {
                 if (newUser == true) {
                     users.add(new BeansData(userEmail));
                 }
+                System.out.println("server in login: " + (Timestamp) context.getAttribute("timestamp"));
+
                 context.setAttribute("users", users);
-                context.setAttribute("timestamp", new Timestamp(new Date().getTime()));
             }
+            context.setAttribute("timestamp", new Timestamp(new Date().getTime()));
+            System.out.println("server in login: " + (Timestamp) context.getAttribute("timestamp"));
         }
 
         // forward to list.jsp page

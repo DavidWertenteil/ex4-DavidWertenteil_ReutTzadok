@@ -10,11 +10,13 @@ import com.google.gson.JsonArray;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -23,8 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 public class Update extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -35,21 +35,22 @@ public class Update extends HttpServlet {
             throws ServletException, IOException {
 
         response.setContentType("application/JSON;charset=UTF-8");
-        ServletContext context = getServletContext();
-        Timestamp serverTimestamp = (Timestamp) context.getAttribute("timestamp");
-        Timestamp clientTimestamp = (Timestamp) request.getAttribute("clientTimestamp");
+        HttpSession session = request.getSession();
+        synchronized (this) {
+            ServletContext context = getServletContext();
+            Timestamp serverTimestamp = (Timestamp) context.getAttribute("timestamp");
+            Timestamp clientTimestamp = (Timestamp) session.getAttribute("clientTimestamp");
 
-        if (clientTimestamp == null || serverTimestamp == null || serverTimestamp.after(clientTimestamp)) {
-            JsonArray updateUsers = new JsonArray();
-            ArrayList<BeansData> users = (ArrayList<BeansData>) context.getAttribute("users");
-            String gson = new Gson().toJson(users);
-            response.getWriter().write(gson);
+            session.setAttribute("clientTimestamp", new Timestamp(new Date().getTime()));
+            if (clientTimestamp == null || serverTimestamp == null || serverTimestamp.after(clientTimestamp) || session.getAttribute("edit") != null) {
+                JsonArray updateUsers = new JsonArray();
+                ArrayList<BeansData> users = (ArrayList<BeansData>) context.getAttribute("users");
+                String gson = new Gson().toJson(users);
+                response.getWriter().write(gson);
+            }
         }
     }
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-
     /**
-     * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -63,7 +64,6 @@ public class Update extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
      * @param response servlet response

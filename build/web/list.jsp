@@ -10,12 +10,9 @@
         import="java.text.SimpleDateFormat"
         import="java.util.Date"
         import="java.sql.Timestamp"
+        import="java.time.LocalDateTime"
         contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    ServletContext context = getServletContext();
-    ArrayList<BeansData> users = (ArrayList<BeansData>) context.getAttribute("users");
-//    ArrayList<BeansData> users = new ArrayList<BeansData>();
-
     String userEmail = (String) session.getAttribute("userEmail");
 %>
 <!DOCTYPE html>
@@ -63,10 +60,7 @@
                 }
                 function getUpdate() {
                     $.post("Update", function (dataInJson) {
-            <% request.setAttribute("clientTimestamp", new Timestamp(new Date().getTime()));%>
-                    console.log(dataInJson);
-                        if (dataInJson !== null) {
-                            console.log("New update!");
+                        if (!jQuery.isEmptyObject(dataInJson)) {
                             $("#list").empty();
                             str = "";
                             $.each(JSON.parse(dataInJson), function (index, elem) {
@@ -75,7 +69,6 @@
                                 str += elem.email;
                                 str += " </div> </th>";
                                 str += " <th div class=col-md-10> ";
-                                console.log(elem.email !== '<%= userEmail%>');
                                 if (elem.email !== '<%= userEmail%>' || <%= session.getAttribute("edit") == null%>) { //
                                     str += elem.status;
                                 } else {
@@ -83,9 +76,9 @@
                                     str += " <form class=form-horizontal action=Save method=post>";
                                     str += " <div class=form-group>";
                                     str += " <div class=col-md-10>";
-                                    str += " <input type=text class=form-control id=status placeholder=";
+                                    str += " <input type=text class=form-control id=status placeholder=\"";
                                     str += elem.status;
-                                    str += " autofocus=autofocus name=status required><br>";
+                                    str += "\" autofocus=autofocus name=status required><br>";
                                     str += " <button type=submit id=status class=\"btn btn-success\">Save</button>";
                                     str += " </div>";
                                     str += " </div>";
@@ -116,12 +109,9 @@
                             $("#list").html(str);
                         }
                     });
-
                 }
 
             });
         </script>
     </body>
-
-
 </html>

@@ -6,7 +6,9 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -72,6 +74,7 @@ public class Save extends HttpServlet {
                     //if user found, update state
                     if (temp.getEmail().compareTo(userEmail) == 0) {
                         temp.setStatus(userStatus);
+                        context.setAttribute("timestamp", new Timestamp(new Date().getTime()));
                         break;
                     }
                 }

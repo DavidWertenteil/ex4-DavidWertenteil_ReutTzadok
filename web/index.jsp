@@ -19,7 +19,7 @@
             if (userEmail == elem.getEmail()) {
                 synchronized (this) {
                     elem.setState(true);
-                    context.setAttribute("timestamp", new Timestamp(new Date().getTime()));
+                    getServletContext().setAttribute("timestamp", new Timestamp(new Date().getTime()));
                 }
                 break;
             }

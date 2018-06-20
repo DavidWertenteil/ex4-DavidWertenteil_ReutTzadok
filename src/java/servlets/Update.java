@@ -43,13 +43,13 @@ public class Update extends HttpServlet {
 
             session.setAttribute("clientTimestamp", new Timestamp(new Date().getTime()));
             if (clientTimestamp == null || serverTimestamp == null || serverTimestamp.after(clientTimestamp) || session.getAttribute("edit") != null) {
-                JsonArray updateUsers = new JsonArray();
                 ArrayList<BeansData> users = (ArrayList<BeansData>) context.getAttribute("users");
                 String gson = new Gson().toJson(users);
                 response.getWriter().write(gson);
             }
         }
     }
+
     /**
      *
      * @param request servlet request

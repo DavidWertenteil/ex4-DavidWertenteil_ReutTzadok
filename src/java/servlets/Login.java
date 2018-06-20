@@ -67,12 +67,10 @@ public class Login extends HttpServlet {
                 if (newUser == true) {
                     users.add(new BeansData(userEmail));
                 }
-                System.out.println("server in login: " + (Timestamp) context.getAttribute("timestamp"));
 
                 context.setAttribute("users", users);
             }
             context.setAttribute("timestamp", new Timestamp(new Date().getTime()));
-            System.out.println("server in login: " + (Timestamp) context.getAttribute("timestamp"));
         }
 
         // forward to list.jsp page

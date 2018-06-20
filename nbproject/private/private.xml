@@ -5,10 +5,13 @@
         <group>
             <file>file:/C:/Software/xampp/htdocs/ex4-DavidWertenteil_ReutTzadok/src/java/servlets/Update.java</file>
             <file>file:/C:/Software/xampp/htdocs/ex4-DavidWertenteil_ReutTzadok/src/java/servlets/Login.java</file>
+            <file>file:/C:/Software/xampp/htdocs/ex4-DavidWertenteil_ReutTzadok/src/java/servlets/Logout.java</file>
             <file>file:/C:/Software/xampp/htdocs/ex4-DavidWertenteil_ReutTzadok/src/java/servlets/Edit.java</file>
             <file>file:/C:/Software/xampp/htdocs/ex4-DavidWertenteil_ReutTzadok/web/list.jsp</file>
             <file>file:/C:/Software/xampp/htdocs/ex4-DavidWertenteil_ReutTzadok/web/index.jsp</file>
             <file>file:/C:/Software/xampp/htdocs/ex4-DavidWertenteil_ReutTzadok/src/java/servlets/Save.java</file>
+            <file>file:/C:/Software/xampp/htdocs/ex4-DavidWertenteil_ReutTzadok/src/java/servlets/BeansData.java</file>
+            <file>file:/C:/Software/xampp/htdocs/ex4-DavidWertenteil_ReutTzadok/src/java/servlets/Listener.java</file>
         </group>
     </open-files>
 </project-private>

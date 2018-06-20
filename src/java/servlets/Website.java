@@ -6,8 +6,11 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,10 +18,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author davidwer
+ * @author davidwer, reutbar
  */
-@WebServlet(name = "Logout", urlPatterns = {"/Logout"})
-public class Logout extends HttpServlet {
+public class Website extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,13 +34,29 @@ public class Logout extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        ServletContext context = getServletContext();
         HttpSession session = request.getSession();
-        if (session.getAttribute("userEmail") != null) {
-            session.invalidate();
+
+        ArrayList<BeansData> users;
+        synchronized (this) {
+            users = (ArrayList<BeansData>) context.getAttribute("users");
         }
-        
-        response.setContentType("application/JSON;charset=UTF-8");
-        response.sendRedirect("Website");
+        String userEmail = (String) session.getAttribute("userEmail");
+
+        if (userEmail != null && users != null) {
+            for (BeansData elem : users) {
+                if (userEmail == elem.getEmail()) {
+                    synchronized (this) {
+                        elem.setState(true);
+                        getServletContext().setAttribute("timestamp", new Timestamp(new Date().getTime()));
+                    }
+                    break;
+                }
+            }
+            request.getRequestDispatcher("list.jsp").forward(request, response);
+        } else {
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -69,4 +87,15 @@ public class Logout extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
 }

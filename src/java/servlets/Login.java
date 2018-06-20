@@ -32,10 +32,12 @@ public class Login extends HttpServlet {
             HttpServletResponse response)
             throws ServletException, IOException {
 
+        response.setContentType("application/JSON;charset=UTF-8");
+        
         // Validate the email
         String userEmail = request.getParameter("email");
         if (userEmail == null) {
-            request.getRequestDispatcher("logout.jsp").forward(request, response);
+            request.getRequestDispatcher("Logout").forward(request, response);
         }
 
         // Set current user in session
@@ -74,16 +76,15 @@ public class Login extends HttpServlet {
         }
 
         // forward to list.jsp page
-        String address = "list.jsp";
-        RequestDispatcher dispatcher = request.getRequestDispatcher(address);
-        dispatcher.forward(request, response);
+        response.sendRedirect("Website");
     }
 
     @Override
     public void doGet(HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        response.setContentType("application/JSON;charset=UTF-8");
+        response.sendRedirect("Website");
     }
 
 }

@@ -84,9 +84,8 @@ public class Save extends HttpServlet {
         }
 
         // Go back to list.jsp page
-        String address = "list.jsp";
-        RequestDispatcher dispatcher = request.getRequestDispatcher(address);
-        dispatcher.forward(request, response);
+        response.setContentType("application/JSON;charset=UTF-8");
+        response.sendRedirect("Website");
     }
 
 }

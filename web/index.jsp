@@ -3,31 +3,6 @@
     Created on : Jun 11, 2018, 12:35:36 PM
     Author     : davidwer, reutbar
 --%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"
-        import="java.util.ArrayList"
-        import="servlets.BeansData"
-        import="java.util.Date"
-        import="java.sql.Timestamp"%>
-<%
-    ServletContext context = getServletContext();
-    ArrayList<BeansData> users = (ArrayList<BeansData>) context.getAttribute("users");
-    String userEmail = (String) session.getAttribute("userEmail");
-
-    if (userEmail != null && users != null) {
-        for (BeansData elem : users) {
-            if (userEmail == elem.getEmail()) {
-                synchronized (this) {
-                    elem.setState(true);
-                    getServletContext().setAttribute("timestamp", new Timestamp(new Date().getTime()));
-                }
-                break;
-            }
-        }
-        request.getRequestDispatcher("list.jsp").forward(request, response);
-
-    } else {
-%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -48,4 +23,4 @@
         </form>
     </body>
 </html>
-<% }%>
+

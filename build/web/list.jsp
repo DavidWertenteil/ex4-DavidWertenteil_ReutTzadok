@@ -110,6 +110,15 @@
                                 });
                                 $("#list").html(str);
                             }
+                        },
+                        failure: function (response) {
+                            console.log("Update failed!");
+                            Ext.Msg.show({
+                                title: 'Error!',
+                                msg: response,
+                                icon: Ext.Msg.ERROR,
+                                buttons: Ext.Msg.OK
+                            });
                         }
                     });
                 }
